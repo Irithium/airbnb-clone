@@ -4,16 +4,27 @@ import React, { useCallback, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Button from "../Button";
 
+// Interface for Modal component props
 interface ModalProps {
+  // Whether the modal is open or not
   isOpen?: boolean;
+  // Callback function to close the modal
   onClose: () => void;
+  // Callback function to submit the modal
   onSubmit: () => void;
+  // Title of the modal
   title?: string;
+  // Body content of the modal
   body?: React.ReactElement;
+  // Footer content of the modal
   footer?: React.ReactElement;
+  // Label for the primary action button
   actionLabel: string;
+  // Whether the modal is disabled or not
   disabled?: boolean;
+  // Callback function for secondary action
   secondaryAction?: () => void;
+  // Label for the secondary action button
   secondaryActionLabel?: string;
 }
 
@@ -29,39 +40,44 @@ const Modal: React.FC<ModalProps> = ({
   secondaryAction,
   secondaryActionLabel,
 }) => {
+  // State to track whether the modal is open or not
   const [showModal, setShowModal] = useState(isOpen);
-
+  // Update the showModal state when isOpen prop changes
   useEffect(() => {
     setShowModal(isOpen);
   }, [isOpen]);
-
+  // Callback function to handle closing the modal
   const handleClose = useCallback(() => {
     if (disabled) {
       return;
     }
 
+    // Set showModal to false and call onClose callback after a delay
     setShowModal(false);
     setTimeout(() => {
       onClose();
     }, 300);
   }, [disabled, onClose]);
 
+  // Callback function to handle submitting the modal
   const handleSubmit = useCallback(() => {
     if (disabled) {
       return;
     }
-
+    // Call onSubmit callback
     onSubmit();
   }, [disabled, onSubmit]);
 
+  // Callback function to handle secondary action
   const handleSecondaryAction = useCallback(() => {
     if (disabled || !secondaryAction) {
       return;
     }
-
+    // Call secondaryAction callback
     secondaryAction();
   }, [disabled, secondaryAction]);
 
+  // If isOpen is false, return null
   if (!isOpen) {
     return null;
   }

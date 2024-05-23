@@ -1,29 +1,43 @@
 "use client";
 
+// Importing axios for making HTTP requests
 import axios from "axios";
-import { signIn } from "next-auth/react";
+
+// Importing react icons for Github and Google
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { useCallback, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
+// Importing react hooks for handling state and form submission
+import { useCallback, useState } from "react";
+// Importing useRouter from next/navigation for client-side routing
+import { useRouter } from "next/navigation";
+// Importing react-hook-form for form handling
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+// Importing next-auth/react for authentication
+import { signIn } from "next-auth/react";
+// Importing custom hook for login modal
 import useLoginModal from "@/app/hooks/useLoginModal";
+// Importing custom hook for register modal
 import useRegisterModal from "@/app/hooks/useRegisterModel";
 
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
-import toast from "react-hot-toast";
 import Button from "../Button";
-import { callbackify } from "util";
-import { useRouter } from "next/navigation";
+
+// Importing toast for displaying notifications
+import toast from "react-hot-toast";
 
 const LoginModal = () => {
+  // Using useRouter for client-side routing
   const router = useRouter();
+  // Using custom hook to get login modal state and onClose function
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  // State to track if the login is in progress
   const [isLoading, setIsLoading] = useState(false);
 
+  // Using useForm hook to handle form submission and validation
   const {
     register,
     handleSubmit,
@@ -35,27 +49,32 @@ const LoginModal = () => {
     },
   });
 
+  // Submit handler for the login form
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    // Set isLoading to true to indicate login is in progress
     setIsLoading(true);
 
+    // Using next-auth/react for authentication
     signIn("credentials", {
       ...data,
       redirect: false,
     }).then((callback) => {
+      // Set isLoading to false after the request is complete
       setIsLoading(false);
-
+      // Handling successful login
       if (callback?.ok) {
         toast.success("Logged succesfully");
         router.refresh();
         loginModal.onClose();
       }
-
+      // Handling login error
       if (callback?.error) {
         toast.error(callback.error);
       }
     });
   };
 
+  // JSX for the modal body
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Welcome back" subtitle="Login to your account!" />
@@ -78,6 +97,8 @@ const LoginModal = () => {
       />
     </div>
   );
+
+  // JSX for the modal footer
   const footerContent = (
     <div className="flex flex-col gap-4">
       <hr />
@@ -107,6 +128,7 @@ const LoginModal = () => {
     </div>
   );
 
+  // Returning the Modal component with the body and footer content
   return (
     <Modal
       disabled={isLoading}

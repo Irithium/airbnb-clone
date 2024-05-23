@@ -1,32 +1,41 @@
 "use client";
 
-import Avatar from "../Avatar";
-import MenuItem from "./MenuItem";
+// Importing necessary components and hooks
+import Avatar from "../Avatar"; // Importing the Avatar component
+import MenuItem from "./MenuItem"; // Importing the MenuItem component
 
-import { AiOutlineMenu } from "react-icons/ai";
-import { useCallback, useState } from "react";
+import { AiOutlineMenu } from "react-icons/ai"; // Importing the AiOutlineMenu icon from react-icons
+import { useCallback, useState } from "react"; // Importing useCallback and useState hooks from React
 
-import useRegisterModal from "@/app/hooks/useRegisterModel";
-import useLoginModal from "@/app/hooks/useLoginModal";
-import { signOut } from "next-auth/react";
+import useRegisterModal from "@/app/hooks/useRegisterModel"; // Importing the useRegisterModal hook
+import useLoginModal from "@/app/hooks/useLoginModal"; // Importing the useLoginModal hook
+import { signOut } from "next-auth/react"; // Importing the signOut function from next-auth/react
 
-import { SafeUser } from "@/app/types/indext";
+import { SafeUser } from "@/app/types/indext"; // Importing the SafeUser type
 
+// Defining the interface for the UserMenu component's props
 interface userMenuProps {
   currentUser?: SafeUser | null;
 }
 
+// UserMenu component that displays a user menu with different options based on the current user's authentication status
 const UserMenu: React.FC<userMenuProps> = ({ currentUser }) => {
-  const registerModal = useRegisterModal();
-  const loginModal = useLoginModal();
-  const [isOpen, setIsOpen] = useState(false);
+  // Initializing the registerModal and loginModal hooks
+  const registerModal = useRegisterModal(); // Initializing the registerModal hook
+  const loginModal = useLoginModal(); // Initializing the loginModal hook
 
+  // Initializing a state variable to toggle the user menu's visibility
+  const [isOpen, setIsOpen] = useState(false); // Initializing a state variable to toggle the user menu's visibility
+
+  // Defining a function to toggle the user menu's visibility
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
 
+  // Returning the UserMenu component's JSX
   return (
     <div className="relative">
+      {/* Displaying the user menu's trigger button and the "Airbnb your home" button */}
       <div className="flex flex-row items-center gap-3">
         <div
           onClick={() => {}}
@@ -44,9 +53,12 @@ const UserMenu: React.FC<userMenuProps> = ({ currentUser }) => {
           </div>
         </div>
       </div>
+
+      {/* Displaying the user menu's content if it's open */}
       {isOpen ? (
         <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
           <div className="flex flex-col cursor-pointer">
+            {/* Displaying different menu items based on the current user's authentication status */}
             {currentUser ? (
               <>
                 <MenuItem onClick={() => {}} label="My trips" />

@@ -1,22 +1,34 @@
 "use client";
 
+// Importing axios for making HTTP requests
 import axios from "axios";
+
+// Importing react icons for Github and Google
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
+// Importing react hooks for handling state and form submission
 import { useCallback, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
+// Importing react - hook - form for form handling
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+// Importing custom hook for register modal
 import useRegisterModal from "@/app/hooks/useRegisterModel";
+
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
-import toast from "react-hot-toast";
 import Button from "../Button";
 
+// Importing toast for displaying notifications
+import toast from "react-hot-toast";
+
 const RegisterModal = () => {
+  // Using custom hook to get register modal state and onClose function
   const registerModal = useRegisterModal();
+  // State to track if the registration is in progress
   const [isLoading, setIsLoading] = useState(false);
 
+  // Using useForm hook to handle form submission and validation
   const {
     register,
     handleSubmit,
@@ -29,18 +41,23 @@ const RegisterModal = () => {
     },
   });
 
+  // Submit handler for the registration form
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    // Set isLoading to true to indicate registration is in progress
     setIsLoading(true);
 
+    // Making a POST request to /api/register with the form data
     axios
       .post("/api/register", data)
       .then(() => registerModal.onClose())
       .catch((error) => toast.error("Something went wrong"))
       .finally(() => {
+        // Set isLoading to false after the request is complete
         setIsLoading(false);
       });
   };
 
+  // JSX for the modal body
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Welcome to Airbnb" subtitle="Create an account!" />
@@ -71,6 +88,8 @@ const RegisterModal = () => {
       />
     </div>
   );
+
+  // JSX for the modal footer
   const footerContent = (
     <div className="flex flex-col gap-4">
       <hr />
@@ -100,6 +119,7 @@ const RegisterModal = () => {
     </div>
   );
 
+  // Returning the Modal component with the body and footer content
   return (
     <Modal
       disabled={isLoading}
