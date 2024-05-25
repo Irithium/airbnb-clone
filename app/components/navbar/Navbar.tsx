@@ -16,6 +16,8 @@ interface NavbarProps {
 
 // Defining a functional component named Navbar
 const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
+  console.log(currentUser);
+
   // Returning a nav element with various styles and children components
   return (
     <nav className="fixed w-full bg-white z-10 shadow-sm">

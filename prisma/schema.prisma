@@ -63,7 +63,7 @@ model Account {
   // Refresh token for the account, stored as a string in the database
   refresh_token String? @db.String
   // Access token for the account, stored as a string in the database
-  acces_token String? @db.String
+  access_token String? @db.String
   // Expiration timestamp for the access token
   expires_at Int?
   // Type of token (e.g. bearer, etc.)

@@ -17,11 +17,13 @@ export const authOptions: AuthOptions = {
     Github({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
     }),
     // Use the Google provider for authentication
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
     }),
     // Use the CredentialsProvider for email/password authentication
     CredentialsProvider({
@@ -75,6 +77,36 @@ export const authOptions: AuthOptions = {
   },
   // Define the secret for JWT
   secret: process.env.NEXTAUTH_SECRET,
+
+  callbacks: {
+    async signIn(params) {
+      // Check if the user already exists
+
+      const existingUser = await prisma.user.findUnique({
+        where: {
+          email:
+            params.user.email !== null && params.user.email !== undefined
+              ? params.user.email
+              : undefined,
+        },
+      });
+
+      if (existingUser?.image === null) return true;
+
+      if (existingUser) {
+        // If the user already exists, update their information
+        await prisma.user.update({
+          where: { id: existingUser.id },
+          data: {
+            image: params.profile?.avatar_url,
+          },
+        });
+      }
+
+      // Allow the sign-in
+      return true;
+    },
+  },
 };
 
 // Export the NextAuth function with the authentication options
