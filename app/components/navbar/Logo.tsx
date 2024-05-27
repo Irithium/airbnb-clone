@@ -8,11 +8,13 @@ const Logo = () => {
 
   return (
     <svg
+      onClick={() => router.push("/")}
       width="102"
       height="32"
       viewBox="0 0 102 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="hidden md:block cursor-pointer"
     >
       <g clipPath="url(#clip0_104_1401)">
         <path

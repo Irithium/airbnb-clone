@@ -22,10 +22,12 @@ import Button from "../Button";
 // Importing toast for displaying notifications
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 const RegisterModal = () => {
   // Using custom hook to get register modal state and onClose function
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   // State to track if the registration is in progress
   const [isLoading, setIsLoading] = useState(false);
 
@@ -57,6 +59,11 @@ const RegisterModal = () => {
         setIsLoading(false);
       });
   };
+
+  const toggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal]);
 
   // JSX for the modal body
   const bodyContent = (
@@ -110,7 +117,7 @@ const RegisterModal = () => {
         <div className="justify-center flex flex-row items-center gap-2">
           <div>Already have an account?</div>
           <div
-            onClick={registerModal.onClose}
+            onClick={toggle}
             className="text-neutral-800 cursor-pointer hover:underline"
           >
             Log in
