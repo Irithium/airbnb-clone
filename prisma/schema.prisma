@@ -96,7 +96,7 @@ model Listing {
   // Timestamp for when the listing was created
   createdAt DateTime @default(now())
   // Category of the listing
-  categoty String
+  category String
   // Number of rooms in the listing
   roomCount Int
   // Number of bathrooms in the listing
