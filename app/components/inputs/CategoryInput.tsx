@@ -15,8 +15,6 @@ const CategoryInput: React.FC<CategoryInputProps> = ({
   selected,
   onClick,
 }) => {
-  console.log(selected);
-
   return (
     <div
       onClick={() => onClick(label)}
