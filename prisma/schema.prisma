@@ -99,6 +99,8 @@ model Listing {
   category String
   // Number of rooms in the listing
   roomCount Int
+  // Number of beds in the listing
+  bedCount Int
   // Number of bathrooms in the listing
   bathroomCount Int
   // Number of guests the listing can accommodate
