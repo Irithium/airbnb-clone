@@ -11,7 +11,7 @@ import useRegisterModal from "@/app/hooks/useRegisterModel"; // Importing the us
 import useLoginModal from "@/app/hooks/useLoginModal"; // Importing the useLoginModal hook
 import { signOut } from "next-auth/react"; // Importing the signOut function from next-auth/react
 
-import { SafeUser } from "@/app/types/indext"; // Importing the SafeUser type
+import { SafeUser } from "@/app/types"; // Importing the SafeUser type
 import useRentModal from "@/app/hooks/useRentModal";
 
 // Defining the interface for the UserMenu component's props
