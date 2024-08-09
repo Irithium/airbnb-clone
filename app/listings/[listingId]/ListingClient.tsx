@@ -15,7 +15,7 @@ import ListingHead from "@/app/components/listings/ListingHead";
 import ListingInfo from "@/app/components/listings/ListingInfo";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
-import { error } from "console";
+
 import ListingReservation from "@/app/components/listings/ListingReservation";
 
 const initialDateRange = {
@@ -130,7 +130,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
               <ListingReservation
                 price={listing.price}
                 totalPrice={totalPrice}
-                onChangeDate={(value => setDateRange(value)}
+                onChangeDate={(value) => setDateRange(value)}
                 dateRange={dateRange}
                 onSubmit={onCreateReservation}
                 disabled={isLoading}

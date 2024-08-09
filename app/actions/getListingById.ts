@@ -15,6 +15,8 @@ export default async function getListingById(params: IParams) {
 
     if (!listing) return null;
 
+    listing.user.email;
+
     return {
       ...listing,
       createdAt: listing.createdAt.toISOString(),
@@ -22,10 +24,13 @@ export default async function getListingById(params: IParams) {
         ...listing.user,
         createdAt: listing.user.createdAt.toISOString(),
         updatedAt: listing.user.updatedAt.toISOString(),
-        email: listing.user.emailVerified?.toISOString() || null,
+        email: listing.user.emailVerified
+          ? listing.user.emailVerified.toISOString()
+          : null,
       },
     };
   } catch (error: any) {
-    throw new Error(error);
+    console.error(error);
+    throw new Error(`Error fetching listing: ${error.message}`);
   }
 }
