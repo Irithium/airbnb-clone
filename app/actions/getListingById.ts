@@ -12,10 +12,10 @@ export default async function getListingById(params: IParams) {
       where: { id: listingId },
       include: { user: true },
     });
+    console.log("Soy LISTINGID", listingId);
+    console.log("SOY LISTING EN getListingById", listing);
 
     if (!listing) return null;
-
-    listing.user.email;
 
     return {
       ...listing,

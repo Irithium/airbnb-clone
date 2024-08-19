@@ -31,7 +31,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
 }) => {
   const router = useRouter();
   const { getByValue } = useCountries();
-  console.log(data);
 
   const location = getByValue(data.locationValue);
 
@@ -64,6 +63,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
     return `${format(start, "PP")} - ${format(end, "PP")}`;
   }, [reservation]);
+
+  if (typeof data.id !== "string") {
+    console.error("Invalid listing ID:", data.id);
+    return null;
+  }
+
+  console.log("Serializando params:", data.id);
 
   return (
     <div
